@@ -11,7 +11,11 @@ open WebSharper.Owin
 
 type WebSharperAdapter =
 
-    static member ToWebPart(app, ?RootDirectory: string) =
+    static member ToWebPart(app, ?RootDirectory: string, ?BinDirectory: string) =
         let rootDirectory = defaultArg RootDirectory ""
+        let binDirectory =
+            match BinDirectory with
+            | Some d -> d
+            | None -> typeof<WebSharperAdapter>.Assembly.Location
         SiteletMiddleware<_>.AsMidFunc(Options.Create(rootDirectory), app)
         |> Suave.Owin.OwinApp.ofMidFunc
