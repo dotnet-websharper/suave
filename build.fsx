@@ -1,3 +1,5 @@
+System.Environment.SetEnvironmentVariable("INTELLIFACTORY", "")
+
 #load "tools/includes.fsx"
 
 open IntelliFactory.Build
