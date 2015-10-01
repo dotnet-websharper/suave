@@ -16,6 +16,8 @@ type WebSharperAdapter =
         let binDirectory =
             match BinDirectory with
             | Some d -> d
-            | None -> typeof<WebSharperAdapter>.Assembly.Location
+            | None ->
+                typeof<WebSharperAdapter>.Assembly.Location
+                |> System.IO.Path.GetDirectoryName
         SiteletMiddleware<_>.AsMidFunc(Options.Create(rootDirectory, binDirectory), app)
         |> Suave.Owin.OwinApp.ofMidFunc
