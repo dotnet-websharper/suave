@@ -28,5 +28,6 @@ bt.Solution [
                 Description = "WebSharper adaptor for Suave."
                 Authors = [ "IntelliFactory" ]
                 RequiresLicenseAcceptance = true })
+        .Add(main)
 ]
 |> bt.Dispatch
