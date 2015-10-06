@@ -6,7 +6,8 @@ open IntelliFactory.Build
 
 let bt =
     BuildTool().PackageId("WebSharper.Suave")
-        .VersionFrom("WebSharper")
+        .VersionFrom("WebSharper", "pre")
+        .WithFSharpVersion(FSharpVersion.FSharp30)
         .WithFramework(fun x -> x.Net45)
 
 let main =
@@ -14,8 +15,8 @@ let main =
         .SourcesFromProject()
         .References(fun ref ->
             [
-                ref.NuGet("Suave").Latest(allowPreRelease = true).Reference()
-                ref.NuGet("WebSharper.Owin").Reference()
+                ref.NuGet("Suave").Latest(allowPreRelease = true).ForceFoundVersion().Reference()
+                ref.NuGet("WebSharper.Owin").ForceFoundVersion().Reference()
             ])
 
 bt.Solution [
