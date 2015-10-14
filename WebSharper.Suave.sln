@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebSharper.Suave", "WebSharper.Suave\WebSharper.Suave.fsproj", "{998558B5-A6CE-4078-A6BD-5C67765A1918}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebSharper.Suave.Tests", "WebSharper.Suave.Tests\WebSharper.Suave.Tests.fsproj", "{08E31193-5375-44BD-B75F-B21A5AFDFFB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{998558B5-A6CE-4078-A6BD-5C67765A1918}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{998558B5-A6CE-4078-A6BD-5C67765A1918}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{998558B5-A6CE-4078-A6BD-5C67765A1918}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08E31193-5375-44BD-B75F-B21A5AFDFFB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08E31193-5375-44BD-B75F-B21A5AFDFFB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08E31193-5375-44BD-B75F-B21A5AFDFFB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08E31193-5375-44BD-B75F-B21A5AFDFFB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

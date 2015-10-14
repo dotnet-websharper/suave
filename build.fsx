@@ -2,6 +2,7 @@ System.Environment.SetEnvironmentVariable("INTELLIFACTORY", "")
 
 #load "tools/includes.fsx"
 
+open IntelliFactory.Core
 open IntelliFactory.Build
 
 let bt =
@@ -20,8 +21,21 @@ let main =
                 ref.NuGet("Mono.Cecil").ForceFoundVersion().Reference()
             ])
 
+let tests =
+    bt.WebSharper.Executable("WebSharper.Suave.Tests")
+        .SourcesFromProject()
+        .References(fun ref ->
+            [
+                ref.Project(main)
+                ref.NuGet("Suave").Reference()
+                ref.NuGet("WebSharper.Owin").Reference()
+                ref.NuGet("WebSharper.UI.Next").Reference()
+                ref.NuGet("Mono.Cecil").Reference()
+            ])
+
 bt.Solution [
     main
+    tests
 
     bt.NuGet.CreatePackage()
         .Configure(fun configuration ->
