@@ -12,9 +12,15 @@ open Suave.Web
 open Suave.Owin
 open WebSharper.Owin
 
+[<AutoOpen>]
+module internal Utils =
+
+    let prependWith (c: string) (s: string) =
+        if s.StartsWith c then s else c + s
+
 type WebSharperAdapter =
 
-    static member ToWebPart(app, ?RootDirectory: string, ?BinDirectory: string) =
+    static member ToWebPart(app, ?RootDirectory: string, ?BinDirectory: string, ?RequestPathBase: string) =
         let rootDirectory =
             match RootDirectory with
             | Some d -> d
@@ -26,9 +32,13 @@ type WebSharperAdapter =
             | None ->
                 typeof<WebSharperAdapter>.Assembly.Location
                 |> Path.GetDirectoryName
+        let pathBase =
+            defaultArg RequestPathBase "/"
+            |> prependWith "/"
+        let fmt p = PrintfFormat<_,_,_,_,_>(pathBase + (if pathBase.EndsWith "/" then "" else "/") + p + "/WebSharper/%s")
         choose [
-            pathScan "/Scripts/WebSharper/%s" (Files.browseFile (Path.Combine(rootDirectory, "Scripts", "WebSharper")))
-            pathScan "/Content/WebSharper/%s" (Files.browseFile (Path.Combine(rootDirectory, "Content", "WebSharper")))
+            pathScan (fmt "Scripts") (Files.browseFile (Path.Combine(rootDirectory, "Scripts", "WebSharper")))
+            pathScan (fmt "Content") (Files.browseFile (Path.Combine(rootDirectory, "Content", "WebSharper")))
             SiteletMiddleware<_>.AsMidFunc(Options.Create(rootDirectory, binDirectory), app)
-            |> Suave.Owin.OwinApp.ofMidFunc
+            |> Suave.Owin.OwinApp.ofMidFunc pathBase
         ]

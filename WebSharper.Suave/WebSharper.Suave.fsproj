@@ -9,21 +9,22 @@
     <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
     <NuGetPackageImportStamp>06f9dc8f</NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <OutputPath>..\build\net45</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <Tailcalls>false</Tailcalls>
-    <OutputPath>bin/Debug</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>$(OutputPath)\WebSharper.Suave.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <Tailcalls>true</Tailcalls>
-    <OutputPath>bin/Release</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>$(OutputPath)\WebSharper.Suave.Tests.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -47,7 +48,7 @@
     </Otherwise>
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
-  <Import Project="../build/net45/$(Name).proj" />
+  <Import Project="$(OutputPath)/$(Name).proj" />
   <ItemGroup>
     <Compile Include="Main.fs" />
   </ItemGroup>
