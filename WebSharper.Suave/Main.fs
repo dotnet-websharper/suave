@@ -33,9 +33,10 @@ type WebSharperAdapter =
                 typeof<WebSharperAdapter>.Assembly.Location
                 |> Path.GetDirectoryName
         let pathBase =
-            defaultArg RequestPathBase "/"
-            |> prependWith "/"
-        let fmt p = PrintfFormat<_,_,_,_,_>(pathBase + (if pathBase.EndsWith "/" then "" else "/") + p + "/WebSharper/%s")
+            match RequestPathBase with
+            | None -> ""
+            | Some p -> p.TrimEnd('/')
+        let fmt p = PrintfFormat<_,_,_,_,_>(pathBase + "/" + p + "/WebSharper/%s")
         choose [
             pathScan (fmt "Scripts") (Files.browseFile (Path.Combine(rootDirectory, "Scripts", "WebSharper")))
             pathScan (fmt "Content") (Files.browseFile (Path.Combine(rootDirectory, "Content", "WebSharper")))
