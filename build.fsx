@@ -30,6 +30,7 @@ let tests =
                 ref.NuGet("Suave").Reference()
                 ref.NuGet("WebSharper.Owin").Reference()
                 ref.NuGet("WebSharper.UI.Next").Reference()
+                ref.NuGet("WebSharper.Testing").Reference()
                 ref.NuGet("Mono.Cecil").Reference()
             ])
 
