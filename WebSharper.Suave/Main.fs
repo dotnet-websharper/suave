@@ -4,10 +4,8 @@ open global.Owin
 open System.Net
 open System.IO
 open Suave
-open Suave.Types
+open Suave.Filters
 open Suave.Http
-open Suave.Http.Applicatives
-open Suave.Http.Successful
 open Suave.Web
 open Suave.Owin
 open WebSharper.Owin
