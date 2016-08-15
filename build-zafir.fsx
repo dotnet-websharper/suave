@@ -8,7 +8,7 @@ open IntelliFactory.Build
 let bt =
     BuildTool().PackageId("Zafir.Suave")
         .VersionFrom("Zafir")
-        .WithFSharpVersion(FSharpVersion.FSharp30)
+        .WithFSharpVersion(FSharpVersion.FSharp31)
         .WithFramework(fun x -> x.Net45)
 
 let main =
