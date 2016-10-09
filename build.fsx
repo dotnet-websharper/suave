@@ -16,7 +16,7 @@ let main =
         .SourcesFromProject()
         .References(fun ref ->
             [
-                ref.NuGet("Suave").ForceFoundVersion().Reference()
+                ref.NuGet("Suave").Latest().ForceFoundVersion().Reference()
                 ref.NuGet("WebSharper.Owin").ForceFoundVersion().Reference()
                 ref.NuGet("Mono.Cecil").ForceFoundVersion().Reference()
             ])
@@ -27,7 +27,7 @@ let tests =
         .References(fun ref ->
             [
                 ref.Project(main)
-                ref.NuGet("Suave").Reference()
+                ref.NuGet("Suave").Latest().Reference()
                 ref.NuGet("WebSharper.Owin").Reference()
                 ref.NuGet("WebSharper.UI.Next").Reference()
                 ref.NuGet("WebSharper.Testing").Reference()
