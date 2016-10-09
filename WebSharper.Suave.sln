@@ -1,11 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebSharper.Suave", "WebSharper.Suave\WebSharper.Suave.fsproj", "{998558B5-A6CE-4078-A6BD-5C67765A1918}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebSharper.Suave.Tests", "WebSharper.Suave.Tests\WebSharper.Suave.Tests.fsproj", "{08E31193-5375-44BD-B75F-B21A5AFDFFB3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4E856206-BEE5-45F3-9DDF-CA93695102F9}"
+	ProjectSection(SolutionItems) = preProject
+		build-zafir.cmd = build-zafir.cmd
+		build-zafir.fsx = build-zafir.fsx
+		build-zafir.sh = build-zafir.sh
+		build.cmd = build.cmd
+		build.fsx = build.fsx
+		build.sh = build.sh
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

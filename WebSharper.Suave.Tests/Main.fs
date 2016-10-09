@@ -59,8 +59,27 @@ module Site =
             | EndPoint.About -> AboutPage ctx
         )
 
-    open WebSharper.Suave
-    open Suave.Web
+module Main =
 
-    do startWebServer defaultConfig
-        (WebSharperAdapter.ToWebPart(Main, RootDirectory = __SOURCE_DIRECTORY__))
+    open System
+    open WebSharper.Suave
+    open global.Suave
+    open Suave.Http
+    open Suave.Web
+    open Suave.Filters
+    open Suave.Operators
+
+    let run rootDirectory =
+        WebSharperAdapter.ToWebPart(Site.Main, ?RootDirectory = rootDirectory,
+            Continuation = Suave.Http.request (fun req ->
+                RequestErrors.NOT_FOUND ("Not found: " + req.url.PathAndQuery)))
+        |> startWebServer defaultConfig
+        0
+
+    [<EntryPoint>]
+    let main = function
+        | [||] -> run None
+        | [| root |] -> run (Some root)
+        | _ ->
+            eprintfn "Usage: WebSharper.Suave.Tests [ROOT_DIR]"; exit 1
+            0
