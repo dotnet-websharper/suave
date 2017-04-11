@@ -54,5 +54,6 @@ bt.Solution [
                 Authors = [ "IntelliFactory" ]
                 RequiresLicenseAcceptance = true })
         .Add(main)
+        .AddDependency("Suave", suaveVersion)
 ]
 |> bt.Dispatch
