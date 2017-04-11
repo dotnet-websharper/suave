@@ -9,13 +9,14 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>WebSharper.Suave.Tests</RootNamespace>
     <AssemblyName>WebSharper.Suave.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
     <Name>WebSharper.Suave.Tests</Name>
     <OutputPath>..\build\net45</OutputPath>
     <WebSharperProject>Site</WebSharperProject>
     <WebProjectOutputDir>.</WebProjectOutputDir>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

@@ -31,7 +31,7 @@
     <Name>WebSharper.Suave</Name>
     <RootNamespace>WebSharper.Suave</RootNamespace>
     <AssemblyName>WebSharper.Suave</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <WarningLevel>3</WarningLevel>
   </PropertyGroup>
   <!-- F# targets -->
