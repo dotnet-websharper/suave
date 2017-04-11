@@ -19,7 +19,6 @@ let main =
         .SourcesFromProject()
         .References(fun ref ->
             [
-                ref.NuGet("Suave").Latest().ForceFoundVersion().BuildTimeOnly().Reference()
                 ref.File(suaveDll)
                 ref.NuGet("FSharp.Core").Version("[4.0.0.1]").ForceFoundVersion().Reference()
                 ref.NuGet("Zafir.Owin").Latest(true).ForceFoundVersion().Reference()
