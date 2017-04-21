@@ -8,15 +8,19 @@ open IntelliFactory.Build
 let bt =
     BuildTool().PackageId("WebSharper.Suave")
         .VersionFrom("WebSharper")
-        .WithFSharpVersion(FSharpVersion.FSharp30)
+        .WithFSharpVersion(FSharpVersion.FSharp40)
         .WithFramework(fun x -> x.Net45)
+
+let suaveVersion = NuGetResolver.Current.Find(bt).FindLatestVersion("Suave").Value.ToString()
+let suaveDll = sprintf "%s/packages/Suave.%s/lib/net40/Suave.dll" __SOURCE_DIRECTORY__ suaveVersion
 
 let main =
     bt.WebSharper.Library("WebSharper.Suave")
         .SourcesFromProject()
         .References(fun ref ->
             [
-                ref.NuGet("Suave").Latest().ForceFoundVersion().Reference()
+                ref.File(suaveDll)
+                ref.NuGet("FSharp.Core").Version("[4.0.0.1]").ForceFoundVersion().Reference()
                 ref.NuGet("WebSharper.Owin").ForceFoundVersion().Reference()
                 ref.NuGet("Mono.Cecil").ForceFoundVersion().Reference()
             ])
@@ -27,7 +31,8 @@ let tests =
         .References(fun ref ->
             [
                 ref.Project(main)
-                ref.NuGet("Suave").Latest().Reference()
+                ref.File(suaveDll)
+                ref.NuGet("FSharp.Core").Version("[4.0.0.1]").ForceFoundVersion().Reference()
                 ref.NuGet("WebSharper.Owin").Reference()
                 ref.NuGet("WebSharper.UI.Next").Reference()
                 ref.NuGet("WebSharper.Testing").Reference()
