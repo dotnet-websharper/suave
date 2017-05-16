@@ -10,6 +10,7 @@ open Suave.Web
 open Suave.Owin
 open WebSharper.Owin
 open System.Threading.Tasks
+open System.Runtime.CompilerServices
 
 [<AutoOpen>]
 module internal Utils =
@@ -17,7 +18,43 @@ module internal Utils =
     let prependWith (c: string) (s: string) =
         if s.StartsWith c then s else c + s
 
+[<Extension>]
 type WebSharperAdapter =
+
+    [<Extension>]
+    static member ToWebPart
+        (
+            options: WebSharperOptions<_>,
+            ?RequestPathBase: string,
+            ?Continuation: WebPart,
+            ?ServeResources: bool
+        ) =
+        let pathBase =
+            match RequestPathBase with
+            | None -> ""
+            | Some p -> p.TrimEnd('/')
+        let fmt p = PrintfFormat<_,_,_,_,_>(pathBase + "/" + p + "/WebSharper/%s")
+        let app (env: OwinEnvironment) =
+            options.AsMidFunc()
+                .Invoke(fun env -> Task.Run(fun () -> env.["owin.ResponseStatusCode"] <- 404))
+                .Invoke(env)
+            |> Async.AwaitTask
+        let siteletWebPart =
+            match Continuation with
+            | Some cont -> Suave.Owin.OwinApp.ofAppWithContinuation pathBase app cont
+            | None -> Suave.Owin.OwinApp.ofApp pathBase app
+        let subPath name =
+            Path.Combine(options.ServerRootDirectory, name, "WebSharper")
+            |> Files.browseFile
+            |> pathScan (fmt name)
+        match defaultArg ServeResources true with
+        | true ->
+            choose [
+                subPath "Scripts"
+                subPath "Content"
+                siteletWebPart
+            ]
+        | false -> siteletWebPart
 
     /// <summary>
     /// Run a WebSharper sitelet as a Suave WebPart.
@@ -48,26 +85,13 @@ type WebSharperAdapter =
             | None ->
                 typeof<WebSharperAdapter>.Assembly.Location
                 |> Path.GetDirectoryName
-        let pathBase =
-            match RequestPathBase with
-            | None -> ""
-            | Some p -> p.TrimEnd('/')
-        let fmt p = PrintfFormat<_,_,_,_,_>(pathBase + "/" + p + "/WebSharper/%s")
-        let midFunc = SiteletMiddleware<_>.AsMidFunc(Options.Create(rootDirectory, binDirectory), app)
-        let app (env: OwinEnvironment) =
-            midFunc
-                .Invoke(fun env -> Task.Run(fun () -> env.["owin.ResponseStatusCode"] <- 404))
-                .Invoke(env)
-            |> Async.AwaitTask
-        let siteletWebPart =
-            match Continuation with
-            | Some cont -> Suave.Owin.OwinApp.ofAppWithContinuation pathBase app cont
-            | None -> Suave.Owin.OwinApp.ofApp pathBase app
-        match defaultArg ServeResources true with
-        | true ->
-            choose [
-                pathScan (fmt "Scripts") (Files.browseFile (Path.Combine(rootDirectory, "Scripts", "WebSharper")))
-                pathScan (fmt "Content") (Files.browseFile (Path.Combine(rootDirectory, "Content", "WebSharper")))
-                siteletWebPart
-            ]
-        | false -> siteletWebPart
+        WebSharperAdapter.ToWebPart(
+            WebSharperOptions(
+                Sitelet = Some app,
+                ServerRootDirectory = rootDirectory,
+                BinDirectory = binDirectory
+            ),
+            ?RequestPathBase = RequestPathBase,
+            ?Continuation = Continuation,
+            ?ServeResources = ServeResources
+        )
