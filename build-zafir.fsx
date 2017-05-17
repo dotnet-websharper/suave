@@ -36,6 +36,7 @@ let tests =
                 ref.NuGet("Zafir.Owin").Latest(true).ForceFoundVersion().Reference()
                 ref.NuGet("Zafir.UI.Next").Latest(true).ForceFoundVersion().Reference()
                 ref.NuGet("Zafir.Testing").Latest(true).ForceFoundVersion().Reference()
+                ref.NuGet("Zafir.Tests").Latest(true).ForceFoundVersion().Reference()
                 ref.NuGet("Mono.Cecil").Reference()
             ])
 

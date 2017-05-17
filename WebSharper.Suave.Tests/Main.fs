@@ -1,75 +1,100 @@
 namespace WebSharper.Suave.Tests
 
 open WebSharper
-open WebSharper.Sitelets
-open WebSharper.UI.Next
-open WebSharper.UI.Next.Server
 
-type EndPoint =
-    | [<EndPoint "/">] Home
-    | [<EndPoint "/about">] About
+module Rpc =
+    open WebSharper.Web
 
-module Templating =
+    [<Rpc>]
+    let GetLoggedInUser() =
+        Remoting.GetContext().UserSession.GetLoggedInUser()
+
+    [<Rpc>]
+    let LoginAs username =
+        Remoting.GetContext().UserSession.LoginUser(username)
+
+    [<Rpc>]
+    let Logout() =
+        Remoting.GetContext().UserSession.Logout()
+
+[<JavaScript>]
+module Client =
+    open WebSharper.JavaScript
+    open WebSharper.UI.Next
     open WebSharper.UI.Next.Html
+    open WebSharper.UI.Next.Client
 
-    [<Literal>]
-    let TemplatePath = __SOURCE_DIRECTORY__ + "/Main.html"
-
-    type MainTemplate = Templating.Template<TemplatePath>
-
-    // Compute a menubar where the menu item for the given endpoint is active
-    let MenuBar (ctx: Context<EndPoint>) endpoint : Doc list =
-        let ( => ) txt act =
-             liAttr [if endpoint = act then yield attr.``class`` "active"] [
-                aAttr [attr.href (ctx.Link act)] [text txt]
-             ]
-        [
-            li ["Home" => EndPoint.Home]
-            li ["About" => EndPoint.About]
-        ]
-
-    let Main ctx action title body =
-        Content.Page(
-            MainTemplate.Doc(
-                title = title,
-                menubar = MenuBar ctx action,
-                body = body
-            )
-        )
-
-module Site =
-    open WebSharper.UI.Next.Html
-
-    let HomePage ctx =
-        Templating.Main ctx EndPoint.Home "Home" [
-            h1 [text "Say Hi to the server!"]
-            div [client <@ Client.Main() @>]
-        ]
-
-    let AboutPage ctx =
-        Templating.Main ctx EndPoint.About "About" [
-            h1 [text "About"]
-            p [text "This is a template WebSharper client-server application."]
-        ]
-
-    let Main =
-        Application.MultiPage (fun ctx endpoint ->
-            match endpoint with
-            | EndPoint.Home -> HomePage ctx
-            | EndPoint.About -> AboutPage ctx
+    let Main() =
+        // Try RPC through CORS: browse 127.0.0.1:8080 and RPC to localhost:8080
+        Remoting.EndPoint <- "http://localhost:8080"
+        Rpc.GetLoggedInUser()
+        |> View.ConstAsync
+        |> Doc.BindView (function
+            | Some username ->
+                div [
+                    text ("Logged in as " + username)
+                    buttonAttr [
+                        on.click (fun _ _ ->
+                            async {
+                                do! Rpc.Logout()
+                                JS.Window.Location.Reload()
+                            }
+                            |> Async.Start)
+                    ] [text "Log out"]
+                ]
+            | None ->
+                let username = Var.Create "testUser"
+                div [
+                    Doc.Input [] username
+                    buttonAttr [
+                        on.clickView username.View (fun _ _ username ->
+                            async {
+                                do! Rpc.LoginAs username
+                                JS.Window.Location.Reload()
+                            }
+                            |> Async.Start)
+                    ] [text "Log in"]
+                ]
         )
 
 module Main =
 
     open System
     open System.IO
+    open global.Suave
     open WebSharper.Owin
     open WebSharper.Suave
-    open global.Suave
+    open WebSharper.Sitelets
+    open WebSharper.UI.Next.Html
+
+    type Endpoint =
+        | Tests of WebSharper.Tests.Website.Content.FullAction
+        | Home
+
+    let Website =
+        Sitelet.Sum [
+            Sitelet.EmbedInUnion <@ Tests @> WebSharper.Tests.Website.Content.Main
+            Sitelet.Content "" Home (fun ctx ->
+                Content.Page [
+                    div [
+                        aAttr [
+                            WebSharper.Tests.Website.Actions.Home
+                            |> WebSharper.Tests.Website.Content.FullAction.Site
+                            |> Tests
+                            |> ctx.Link
+                            |> attr.href
+                        ] [text "Go to test suites"]
+                    ]
+                    div [text "Test RPC with CORS (browse this page at 127.0.0.1:8080):"]
+                    div [client <@ Client.Main() @>]
+                ]
+            )
+        ]
 
     let run rootDirectory =
+        WebSharper.Web.Remoting.AddAllowedOrigin "http://127.0.0.1:8080"
         WebSharperOptions(
-            Sitelet = Some Site.Main,
+            Sitelet = Some Website,
             ServerRootDirectory = rootDirectory
         ).ToWebPart(
             Continuation = request (fun req ->
