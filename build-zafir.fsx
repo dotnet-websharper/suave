@@ -22,7 +22,6 @@ let main =
                 ref.File(suaveDll)
                 ref.NuGet("FSharp.Core").Version("[4.0.0.1]").ForceFoundVersion().Reference()
                 ref.NuGet("Zafir.Owin").Latest(true).ForceFoundVersion().Reference()
-                ref.NuGet("Mono.Cecil").ForceFoundVersion().Reference()
             ])
 
 let tests =
@@ -37,7 +36,6 @@ let tests =
                 ref.NuGet("Zafir.UI.Next").Latest(true).ForceFoundVersion().Reference()
                 ref.NuGet("Zafir.Testing").Latest(true).ForceFoundVersion().Reference()
                 ref.NuGet("Zafir.Tests").Latest(true).ForceFoundVersion().Reference()
-                ref.NuGet("Mono.Cecil").Reference()
             ])
 
 bt.Solution [
