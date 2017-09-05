@@ -11,7 +11,7 @@ let bt =
         .WithFSharpVersion(FSharpVersion.FSharp40)
         .WithFramework(fun x -> x.Net45)
 
-let suaveVersion = NuGetResolver.Current.Find(bt).FindLatestVersion("Suave").Value.ToString()
+let suaveVersion = NuGetResolver.Current.Find(bt).FindLatestVersion("Suave", allowPreRelease = false).Value.ToString()
 let suaveDll = sprintf "%s/packages/Suave.%s/lib/net40/Suave.dll" __SOURCE_DIRECTORY__ suaveVersion
 
 let main =
