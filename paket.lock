@@ -730,21 +730,21 @@ NUGET
       System.Xml.ReaderWriter (>= 4.3) - restriction: || (>= dnxcore50) (&& (< monoandroid) (< net45) (>= netstandard1.0) (< netstandard1.3) (< win8) (< wp8) (< wpa81)) (&& (< monotouch) (< net45) (>= netstandard1.3) (< win8) (< wpa81) (< xamarinios) (< xamarinmac) (< xamarintvos) (< xamarinwatchos))
       System.Xml.XmlDocument (>= 4.3) - restriction: || (>= dnxcore50) (&& (< monotouch) (< net45) (>= netstandard1.3) (< win8) (< wpa81) (< xamarinios) (< xamarinmac) (< xamarintvos) (< xamarinwatchos))
   remote: https://nuget.intellifactory.com/nuget
-    WebSharper (4.2.0.191-alpha)
+    WebSharper (4.2.0.196-beta)
       Mono.Cecil (>= 0.10.0-beta6 < 0.11.0-beta)
-    WebSharper.FSharp (4.2.0.191-alpha)
-      WebSharper (4.2.0.191-alpha)
-    WebSharper.Owin (4.2.0.94-alpha)
+    WebSharper.FSharp (4.2.0.196-beta)
+      WebSharper (4.2.0.196-beta)
+    WebSharper.Owin (4.2.0.98-beta)
       Microsoft.Owin (>= 3.1 < 3.2)
       Owin (>= 1.0 < 1.1)
-      WebSharper (>= 4.2.0-alpha < 4.3.0-alpha)
-    WebSharper.Testing (4.2.0.191-alpha)
-      WebSharper (4.2.0.191-alpha)
-    WebSharper.Tests (4.2.0.191-alpha)
-      WebSharper (4.2.0.191-alpha)
-      WebSharper.Testing (4.2.0.191-alpha)
-    WebSharper.UI (4.2.0.49-alpha)
-      WebSharper (>= 4.2.0-alpha < 4.3.0-alpha)
+      WebSharper (>= 4.2.0-beta < 4.3.0-beta)
+    WebSharper.Testing (4.2.0.196-beta)
+      WebSharper (4.2.0.196-beta)
+    WebSharper.Tests (4.2.0.196-beta)
+      WebSharper (4.2.0.196-beta)
+      WebSharper.Testing (4.2.0.196-beta)
+    WebSharper.UI (4.2.0.55-beta)
+      WebSharper (>= 4.2.0-beta < 4.3.0-beta)
 
 GROUP build
 RESTRICTION: == net45
@@ -768,3 +768,8 @@ GITHUB
     tools/WebSharper.Fake.cmd (54cd7d4fa305ad5004b1250449acc296d70a18a1)
     tools/WebSharper.Fake.fsx (54cd7d4fa305ad5004b1250449acc296d70a18a1)
     tools/WebSharper.Fake.sh (54cd7d4fa305ad5004b1250449acc296d70a18a1)
+GROUP wsbuild
+
+GIT
+  remote: https://github.com/dotnet-websharper/build-script
+     (0ffbf6a797788d426225eda88d461940cb95be1d)

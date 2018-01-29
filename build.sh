@@ -4,8 +4,9 @@ set -e
 
 if [ "$OS" = "Windows_NT" ]; then
     .paket/paket.exe restore -g build
+    .paket/paket.exe update -g wsbuild
 else
-    mono .paket/paket.exe restore -g build
+    mono .paket/paket.exe udpate -g wsbuild
 fi
 
-paket-files/build/intellifactory/websharper/tools/WebSharper.Fake.sh "$@"
+exec paket-files/wsbuild/github.com/dotnet-websharper/build-script/WebSharper.Fake.sh "$@"
