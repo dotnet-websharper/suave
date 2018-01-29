@@ -1,0 +1,19 @@
+type file
+id WebSharper.Suave
+authors
+    IntelliFactory
+owners
+    IntelliFactory
+licenseUrl http://websharper.com/licensing
+projectUrl https://github.com/intellifactory/websharper.suave
+description
+    WebSharper adaptor for Suave.
+tags
+    Web JavaScript F# C#
+files
+    ../WebSharper.Suave/bin/Release/net461/WebSharper.Suave.dll ==> lib/net461
+    ../WebSharper.Suave/bin/Release/net461/WebSharper.Suave.xml ==> lib/net461
+dependencies
+        WebSharper ~> LOCKEDVERSION/3
+        Suave ~> LOCKEDVERSION/3
+        WebSharper.Owin ~> LOCKEDVERSION/3

@@ -3,4 +3,9 @@
 packages/
 bin/
 obj/
+/WebSharper.Suave.Tests/Content/
 /WebSharper.Suave.Tests/Scripts/
+/.fake/
+/paket-files/
+/.vscode/
+nuget/*.paket.template

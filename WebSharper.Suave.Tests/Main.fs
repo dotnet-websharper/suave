@@ -20,9 +20,9 @@ module Rpc =
 [<JavaScript>]
 module Client =
     open WebSharper.JavaScript
-    open WebSharper.UI.Next
-    open WebSharper.UI.Next.Html
-    open WebSharper.UI.Next.Client
+    open WebSharper.UI
+    open WebSharper.UI.Html
+    open WebSharper.UI.Client
 
     let Main() =
         // Try RPC through CORS: browse 127.0.0.1:8080 and RPC to localhost:8080
@@ -31,9 +31,9 @@ module Client =
         |> View.ConstAsync
         |> Doc.BindView (function
             | Some username ->
-                div [
+                div [] [
                     text ("Logged in as " + username)
-                    buttonAttr [
+                    button [
                         on.click (fun _ _ ->
                             async {
                                 do! Rpc.Logout()
@@ -44,9 +44,9 @@ module Client =
                 ]
             | None ->
                 let username = Var.Create "testUser"
-                div [
+                div [] [
                     Doc.Input [] username
-                    buttonAttr [
+                    button [
                         on.clickView username.View (fun _ _ username ->
                             async {
                                 do! Rpc.LoginAs username
@@ -65,37 +65,38 @@ module Main =
     open WebSharper.Owin
     open WebSharper.Suave
     open WebSharper.Sitelets
-    open WebSharper.UI.Next.Html
+    open WebSharper.UI.Html
 
     type Endpoint =
         | Tests of WebSharper.Tests.Website.Content.FullAction
         | Home
 
     let Website =
-        Sitelet.Sum [
-            Sitelet.EmbedInUnion <@ Tests @> WebSharper.Tests.Website.Content.Main
-            Sitelet.Content "" Home (fun ctx ->
-                Content.Page [
-                    div [
-                        aAttr [
-                            WebSharper.Tests.Website.Actions.Home
-                            |> WebSharper.Tests.Website.Content.FullAction.Site
-                            |> Tests
-                            |> ctx.Link
-                            |> attr.href
-                        ] [text "Go to test suites"]
-                    ]
-                    div [text "Test RPC with CORS (browse this page at 127.0.0.1:8080):"]
-                    div [client <@ Client.Main() @>]
-                ]
-            )
-        ]
+        WebSharper.Tests.Website.Content.Main
+        // Sitelet.Sum [
+        //     Sitelet.EmbedInUnion <@ Tests @> WebSharper.Tests.Website.Content.Main
+        //     Sitelet.Content "" Home (fun ctx ->
+        //         Content.Page [
+        //             div [] [
+        //                 a [
+        //                     WebSharper.Tests.Website.Actions.Home
+        //                     |> WebSharper.Tests.Website.Content.FullAction.Site
+        //                     |> Tests
+        //                     |> ctx.Link
+        //                     |> attr.href
+        //                 ] [text "Go to test suites"]
+        //             ]
+        //             div [] [text "Test RPC with CORS (browse this page at 127.0.0.1:8080):"]
+        //             div [] [client <@ Client.Main() @>]
+        //         ]
+        //     )
+        // ]
 
     let run rootDirectory =
         WebSharper.Web.Remoting.AddAllowedOrigin "http://127.0.0.1:8080"
         WebSharperOptions(
             Sitelet = Some Website,
-            ServerRootDirectory = rootDirectory
+            ServerRootDirectory = DirectoryInfo(rootDirectory).FullName
         ).ToWebPart(
             Continuation = request (fun req ->
                 RequestErrors.NOT_FOUND ("Not found: " + req.url.PathAndQuery))
