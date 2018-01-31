@@ -5,6 +5,7 @@
     <WebSharperProject>Library</WebSharperProject>
     <WebSharperSourceMap>false</WebSharperSourceMap>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Signed>False</Signed>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.fs" />
