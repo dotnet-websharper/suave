@@ -72,7 +72,7 @@ module Main =
         | Home
 
     let Website =
-        WebSharper.Tests.Website.Content.Main
+        WebSharper.Tests.Website.Content.Main true
         // Sitelet.Sum [
         //     Sitelet.EmbedInUnion <@ Tests @> WebSharper.Tests.Website.Content.Main
         //     Sitelet.Content "" Home (fun ctx ->
