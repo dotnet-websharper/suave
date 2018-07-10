@@ -469,22 +469,22 @@ NUGET
       System.Xml.XmlDocument (>= 4.3)
       System.Xml.XPath (>= 4.3)
   remote: https://nuget.intellifactory.com/nuget
-    WebSharper (4.3.0.274)
-    WebSharper.FSharp (4.3.0.274)
-      WebSharper (4.3.0.274)
-    WebSharper.Owin (4.3.0.125)
+    WebSharper (4.4.0.278)
+    WebSharper.FSharp (4.4.0.278)
+      WebSharper (4.4.0.278)
+    WebSharper.Owin (4.4.0.130)
       Microsoft.Owin (>= 3.0)
       Owin (>= 1.0 < 1.1)
-      WebSharper (>= 4.3 < 4.4)
-    WebSharper.Testing (4.3.0.274)
-      WebSharper (4.3.0.274)
-    WebSharper.Tests (4.3.0.274)
-      WebSharper (4.3.0.274)
-      WebSharper.Testing (4.3.0.274)
-    WebSharper.UI (4.3.0.127)
+      WebSharper (>= 4.4 < 4.5)
+    WebSharper.Testing (4.4.0.278)
+      WebSharper (4.4.0.278)
+    WebSharper.Tests (4.4.0.278)
+      WebSharper (4.4.0.278)
+      WebSharper.Testing (4.4.0.278)
+    WebSharper.UI (4.4.0.130)
       HtmlAgilityPack (>= 1.7.1)
       System.Xml.XDocument (>= 4.3)
-      WebSharper (>= 4.3 < 4.4)
+      WebSharper (>= 4.4 < 4.5)
 
 GROUP build
 RESTRICTION: == net45
@@ -492,7 +492,7 @@ NUGET
   remote: https://api.nuget.org/v3/index.json
     Chessie (0.6)
       FSharp.Core
-    FAKE (5.1)
+    FAKE (5.2)
     FSharp.Compiler.Tools (10.0.2)
     FSharp.Core (4.5)
     Mono.Cecil (0.10)
