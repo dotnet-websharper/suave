@@ -478,11 +478,11 @@ NUGET
       System.Xml.ReaderWriter (>= 4.3) - restriction: || (&& (== net461) (< net46)) (== netstandard2.0)
       System.Xml.XmlDocument (>= 4.3)
       System.Xml.XPath (>= 4.3)
-  remote: https://nuget.intellifactory.com/nuget
     WebSharper (4.4.0.280)
     WebSharper.FSharp (4.4.0.280)
       WebSharper (4.4.0.280)
-    WebSharper.Owin (4.4.0.131)
+  remote: https://nuget.intellifactory.com/nuget
+    WebSharper.Owin (4.4.0.132)
       Microsoft.Owin (>= 3.0)
       Owin (>= 1.0 < 1.1)
       WebSharper (>= 4.4 < 4.5)
@@ -491,7 +491,7 @@ NUGET
     WebSharper.Tests (4.4.0.280)
       WebSharper (4.4.0.280)
       WebSharper.Testing (4.4.0.280)
-    WebSharper.UI (4.4.0.131)
+    WebSharper.UI (4.4.1.137)
       HtmlAgilityPack (>= 1.7.1)
       System.Xml.XDocument (>= 4.3)
       WebSharper (>= 4.4 < 4.5)
