@@ -14,6 +14,6 @@ files
     ../WebSharper.Suave/bin/Release/net461/WebSharper.Suave.dll ==> lib/net461
     ../WebSharper.Suave/bin/Release/net461/WebSharper.Suave.xml ==> lib/net461
 dependencies
-        WebSharper ~> LOCKEDVERSION/3
-        Suave ~> LOCKEDVERSION/3
-        WebSharper.Owin ~> LOCKEDVERSION/3
+        WebSharper ~> LOCKEDVERSION:[3]
+        Suave ~> LOCKEDVERSION:[3]
+        WebSharper.Owin ~> LOCKEDVERSION:[3]
