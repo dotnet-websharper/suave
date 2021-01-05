@@ -1,14 +1,14 @@
 source https://api.nuget.org/v3/index.json
 source https://daily.websharper.com/nuget
 
-framework: net461, netstandard2.0
+framework: net461
 strategy: min
 storage: none
 
-nuget FSharp.Core ~> 4.2.0
+nuget FSharp.Core 4.3.4
 nuget WebSharper ~> 4.7
 nuget WebSharper.FSharp ~> 4.7
-nuget Suave 
+nuget Suave 2.5.6
 nuget WebSharper.Owin ~> 4.7
 nuget WebSharper.UI ~> 4.7
 nuget WebSharper.Testing ~> 4.7
